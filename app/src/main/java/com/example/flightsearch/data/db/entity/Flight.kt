@@ -5,11 +5,11 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity("airport")
-data class Airport(
-    @PrimaryKey(autoGenerate = true)
-    val id: Int = 0,
+data class Flight(
+    @PrimaryKey
+    val id: Int,
+    val name: String,
     @ColumnInfo(name = "iata_code")
     val iataCode: String,
-    val name: String,
     val passengers: Int
 )
