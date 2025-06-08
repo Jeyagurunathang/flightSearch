@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="circular_shape_medium">12.dp</dimen>
+    <dimen name="vertical_padding_medium">80.dp</dimen>
+    <dimen name="horizontal_padding_medium">40.dp</dimen>
+    <dimen name="search_bar_end_padding">16.dp</dimen>
+</resources>
