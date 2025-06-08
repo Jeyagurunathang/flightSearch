@@ -1,7 +1,11 @@
 package com.example.flightsearch.data.repository
 
-interface FlightRepository {
-    suspend fun getAllFlights(flightCode: String)
+import com.example.flightsearch.data.db.entity.Favorite
+import com.example.flightsearch.data.db.entity.Airport
+import kotlinx.coroutines.flow.Flow
 
-    suspend fun getFavoriteFlightDetails()
+interface FlightRepository {
+    fun getAllFlights(flightCode: String): Flow<List<Airport>>
+
+    fun getFavoriteFlightDetails(): Flow<List<Favorite>>
 }

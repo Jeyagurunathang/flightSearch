@@ -3,7 +3,7 @@ package com.example.flightsearch.data.db.dao
 import androidx.room.Dao
 import androidx.room.Query
 import com.example.flightsearch.data.db.entity.Favorite
-import com.example.flightsearch.data.db.entity.Flight
+import com.example.flightsearch.data.db.entity.Airport
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -15,7 +15,7 @@ interface FlightDao {
             OR name LIKE :airportCode
         """
     )
-    fun getAirportData(airportCode: String): Flow<List<Flight>>
+    fun getAirportData(airportCode: String): Flow<List<Airport>>
 
     @Query(
         """
@@ -23,5 +23,5 @@ interface FlightDao {
             FROM favorite
         """
     )
-    suspend fun getFavoriteAirportData(): Flow<List<Favorite>>
+    fun getFavoriteAirportData(): Flow<List<Favorite>>
 }
