@@ -1,34 +1,57 @@
-package com.example.flightsearch.ui.theme
+package com.example.ui.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
+import com.example.flightsearch.R
 
-// Set of Material typography styles to start with
-val Typography = Typography(
-    bodyLarge = TextStyle(
-        fontFamily = FontFamily.Default,
-        fontWeight = FontWeight.Normal,
-        fontSize = 16.sp,
-        lineHeight = 24.sp,
-        letterSpacing = 0.5.sp
-    )
-    /* Other default text styles to override
-    titleLarge = TextStyle(
-        fontFamily = FontFamily.Default,
-        fontWeight = FontWeight.Normal,
-        fontSize = 22.sp,
-        lineHeight = 28.sp,
-        letterSpacing = 0.sp
+val poppinsRegular = FontFamily(
+    Font(R.font.regular)
+)
+
+val poppinsMedium = FontFamily(
+    Font(R.font.medium)
+)
+
+val poppinsSemiBold = FontFamily(
+    Font(R.font.semi_bold)
+)
+
+val poppinsBold = FontFamily(
+    Font(R.font.bold)
+)
+
+val typography = Typography(
+    titleMedium = TextStyle(
+        fontFamily = poppinsSemiBold,
+        fontSize = 26.sp,
+        letterSpacing = 3.sp
     ),
-    labelSmall = TextStyle(
-        fontFamily = FontFamily.Default,
-        fontWeight = FontWeight.Medium,
-        fontSize = 11.sp,
-        lineHeight = 16.sp,
-        letterSpacing = 0.5.sp
+    bodyLarge = TextStyle(
+        fontFamily = poppinsRegular,
+        fontSize = 24.sp,
+        letterSpacing = 3.sp
+    ),
+    bodyMedium = TextStyle(
+        fontFamily = poppinsRegular,
+        fontSize = 20.sp,
+        letterSpacing = 3.sp
+    ),
+    bodySmall = TextStyle(
+        fontFamily = poppinsRegular,
+        fontSize = 16.sp,
+        letterSpacing = 3.sp
+    ),
+    labelLarge = TextStyle(
+        fontFamily = poppinsSemiBold,
+        fontSize = 14.sp,
+        letterSpacing = 1.sp
+    ),
+    labelMedium = TextStyle(
+        fontFamily = poppinsRegular,
+        fontSize = 14.sp,
+        letterSpacing = 1.sp
     )
-    */
 )
