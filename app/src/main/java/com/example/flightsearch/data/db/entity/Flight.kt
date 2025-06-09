@@ -5,7 +5,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity("airport")
-data class Airport(
+data class Flight(
     @PrimaryKey
     val id: Int,
     val name: String,

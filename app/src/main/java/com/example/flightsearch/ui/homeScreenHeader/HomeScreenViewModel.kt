@@ -1,4 +1,4 @@
-package com.example.flightsearch.ui.home
+package com.example.flightsearch.ui.homeScreenHeader
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -9,17 +9,15 @@ import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.flightsearch.FlightSearchApplication
 import com.example.flightsearch.data.repository.FlightRepository
 import com.example.flightsearch.ui.uistate.HomeScreenUiState
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 
 class HomeScreenViewModel(
     private val flightRepository: FlightRepository
 ) : ViewModel() {
-    val homeScreenUiState: StateFlow<HomeScreenUiState> = flightRepository
+    val flightUiState: StateFlow<HomeScreenUiState> = flightRepository
         .getAllFlights("FCO")
         .map { HomeScreenUiState(it) }
         .stateIn(
