@@ -1,13 +1,18 @@
 package com.example.flightsearch.ui.homeScreenBody
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -32,41 +37,55 @@ fun FlightListCard(
             contentColor = MaterialTheme.colorScheme.onSurface
         )
     ) {
-        Column (
-            modifier = Modifier.padding(dimensionResource(R.dimen.padding_medium)),
-            verticalArrangement = Arrangement.spacedBy(dimensionResource(R.dimen.padding_normal))
-        ) {
-            Text(
-                text = flight.iataCode,
-                style = MaterialTheme.typography.bodyMedium
-            )
+        Box {
+            IconButton(
+                onClick = {},
+                modifier = Modifier.align(Alignment.TopEnd)
+            ) {
+                Icon(
+                    painter = painterResource(R.drawable.outline_heart),
+                    contentDescription = "Heart",
+                    modifier = Modifier.size(20.dp),
+                    tint = MaterialTheme.colorScheme.primary
+                )
+            }
 
-            Text(
-                text = flight.name,
-                style = MaterialTheme.typography.bodySmall
-            )
+            Column (
+                modifier = Modifier.padding(dimensionResource(R.dimen.padding_medium)),
+                verticalArrangement = Arrangement.spacedBy(dimensionResource(R.dimen.padding_normal))
+            ) {
+                Text(
+                    text = flight.iataCode,
+                    style = MaterialTheme.typography.bodyMedium
+                )
 
-            Icon(
-                painter = painterResource(R.drawable.airplane),
-                contentDescription = "flight icon",
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(vertical = dimensionResource(R.dimen.padding_regular))
-                    .rotate(90F)
-                    .size(16.dp)
-                    .align(Alignment.CenterHorizontally),
-                tint = MaterialTheme.colorScheme.primary
-            )
+                Text(
+                    text = flight.name,
+                    style = MaterialTheme.typography.bodySmall
+                )
 
-            Text(
-                text = "CHE",
-                style = MaterialTheme.typography.bodyMedium
-            )
+                Icon(
+                    painter = painterResource(R.drawable.airplane),
+                    contentDescription = "flight icon",
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = dimensionResource(R.dimen.padding_regular))
+                        .rotate(90F)
+                        .size(16.dp)
+                        .align(Alignment.CenterHorizontally),
+                    tint = MaterialTheme.colorScheme.primary
+                )
 
-            Text(
-                text = "Chennai International Airport",
-                style = MaterialTheme.typography.bodySmall
-            )
+                Text(
+                    text = "CHE",
+                    style = MaterialTheme.typography.bodyMedium
+                )
+
+                Text(
+                    text = "Chennai International Airport",
+                    style = MaterialTheme.typography.bodySmall
+                )
+            }
         }
     }
 }
