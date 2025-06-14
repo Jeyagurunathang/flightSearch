@@ -1,10 +1,15 @@
 package com.example.flightsearch.ui.homeScreenHeader
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -16,14 +21,24 @@ import com.example.flightsearch.data.db.entity.Flight
 @Composable
 fun SearchSuggestionList(
     modifier: Modifier = Modifier,
-    flights: List<Flight>
+    flights: List<Flight> = emptyList()
 ) {
     LazyColumn (
-        verticalArrangement = Arrangement.spacedBy(dimensionResource(R.dimen.padding_normal))
+        modifier = Modifier.fillMaxSize().padding(dimensionResource(R.dimen.padding_normal)),
+//        verticalArrangement = Arrangement.spacedBy(dimensionResource(R.dimen.padding_medium)),
     ) {
-        items(items = flights) { flight ->
+        items(
+            items = flights,
+            key = { flight -> flight.id }
+        ) { flight ->
             Row (
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clickable {  }
+                    .padding(
+                        vertical = dimensionResource(R.dimen.padding_medium),
+                        horizontal = dimensionResource(R.dimen.padding_normal)
+                    ),
                 horizontalArrangement = Arrangement.spacedBy(dimensionResource(R.dimen.padding_normal)),
             ){
                 Text(

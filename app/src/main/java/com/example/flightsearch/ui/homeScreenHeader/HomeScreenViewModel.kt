@@ -26,6 +26,16 @@ class HomeScreenViewModel(
             initialValue = HomeScreenUiState()
         )
 
+    fun searchFlights(flightCode: String) {
+        val formatedFlightCode = "%${flightCode}%"
+        flightUiState = flightRepository.getAllFlights(formatedFlightCode).map { HomeScreenUiState(it) }
+            .stateIn(
+                scope = viewModelScope,
+                started = SharingStarted.WhileSubscribed(5000),
+                initialValue = HomeScreenUiState()
+            )
+    }
+
     companion object {
         val factory: ViewModelProvider.Factory = viewModelFactory {
             initializer {

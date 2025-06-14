@@ -33,14 +33,14 @@ import com.example.flightsearch.data.db.entity.Flight
 @Composable
 fun HomeScreenHeader(
     modifier: Modifier = Modifier,
-    viewModel: HomeScreenViewModel
+    userSearchingFlight: String = "",
+    onValueChange: (String) -> Unit,
+    onCancelButtonClicked: () -> Unit
 ) {
-    var flightCodeFromUser by remember { mutableStateOf("") }
-
     Column {
         TextField(
-            value = flightCodeFromUser,
-            onValueChange = { flightCodeFromUser = it },
+            value = userSearchingFlight,
+            onValueChange = { onValueChange(it) },
             textStyle = MaterialTheme.typography.labelLarge,
             shape = MaterialTheme.shapes.large,
             placeholder = {
@@ -57,11 +57,9 @@ fun HomeScreenHeader(
                 imeAction = ImeAction.Go
             ),
             trailingIcon = {
-                if (flightCodeFromUser.isNotBlank()) {
+                if (userSearchingFlight.isNotBlank()) {
                     IconButton(
-                        onClick = {
-                            flightCodeFromUser = ""
-                        },
+                        onClick = onCancelButtonClicked,
                         modifier = Modifier.size(30.dp)
                     ) {
                         Icon(
@@ -73,15 +71,5 @@ fun HomeScreenHeader(
             },
             modifier = Modifier.fillMaxWidth()
         )
-
-        Spacer(modifier = Modifier.height(dimensionResource(R.dimen.padding_regular)))
-
-        if (flightCodeFromUser.isNotEmpty()) {
-            SearchSuggestionList(flights = listOf(
-                Flight(id = 1, iataCode = "CHE", name = "Chennai international Airport", passengers = 21),
-                Flight(id = 1, iataCode = "MAD", name = "Madurai international Airport", passengers = 20),
-                Flight(id = 1, iataCode = "LON", name = "London international Airport", passengers = 21)
-            ))
-        }
     }
 }

@@ -62,6 +62,9 @@ dependencies {
     implementation(libs.androidx.lifecycle.runtime.ktx.v287)
     implementation(libs.androidx.lifecycle.viewmodel.compose)
 
+    // Navigation
+    implementation(libs.androidx.navigation.compose)
+
     //Room
     implementation("androidx.room:room-runtime:${rootProject.extra["room_version"]}")
     ksp("androidx.room:room-compiler:${rootProject.extra["room_version"]}")

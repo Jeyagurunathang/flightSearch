@@ -12,23 +12,37 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import com.example.compose.FlightSearchTheme
 import com.example.flightsearch.R
+import com.example.flightsearch.data.db.entity.Flight
+import com.example.flightsearch.ui.FlightSearchScreens
 import com.example.flightsearch.ui.homeScreenBody.FlightsList
 
 @Composable
 fun HomeScreen(
     modifier: Modifier = Modifier,
-    homeScreenViewModel: HomeScreenViewModel = viewModel(factory = HomeScreenViewModel.factory)
+    homeScreenViewModel: HomeScreenViewModel = viewModel(factory = HomeScreenViewModel.factory),
+    navController: NavHostController = rememberNavController()
 ) {
     Surface {
         val uiState by homeScreenViewModel.flightUiState.collectAsState()
         val flights = uiState.flights
+
+        var userSearchFlight by remember { mutableStateOf("") }
+        var isSearchSuggestionDisplay by remember { mutableStateOf(false) }
 
         Column (
             modifier = Modifier.fillMaxSize()
@@ -39,12 +53,23 @@ fun HomeScreen(
                 .background(color = MaterialTheme.colorScheme.surface),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            HomeScreenHeader(viewModel = homeScreenViewModel)
-            Log.d("flights", uiState.flights.toString())
-            Spacer(modifier = Modifier.height(dimensionResource(R.dimen.padding_medium)))
-            FlightsList()
-            Spacer(modifier = Modifier.height(dimensionResource(R.dimen.padding_medium)))
-            FlightsList()
+            HomeScreenHeader(
+                userSearchingFlight = userSearchFlight,
+                onValueChange = {
+                    userSearchFlight = it
+                    homeScreenViewModel.searchFlights(it.uppercase())
+                },
+                onCancelButtonClicked = { userSearchFlight = "" }
+            )
+
+            if (userSearchFlight.isNotBlank()) {
+                SearchSuggestionList(
+                    flights = flights
+                )
+            } else {
+                FlightsList()
+            }
+
         }
     }
 }
