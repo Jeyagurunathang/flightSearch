@@ -17,7 +17,7 @@ import kotlinx.coroutines.flow.stateIn
 class HomeScreenViewModel(
     private val flightRepository: FlightRepository
 ) : ViewModel() {
-    val flightUiState: StateFlow<HomeScreenUiState> = flightRepository
+    var flightUiState: StateFlow<HomeScreenUiState> = flightRepository
         .getAllFlights("FCO")
         .map { HomeScreenUiState(it) }
         .stateIn(

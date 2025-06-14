@@ -11,8 +11,7 @@ interface FlightDao {
     @Query(
         """
             SELECT * FROM airport
-            WHERE iata_code LIKE :airportCode 
-            OR name LIKE :airportCode
+            WHERE iata_code != :airportCode
         """
     )
     fun getAirportData(airportCode: String): Flow<List<Flight>>

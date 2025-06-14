@@ -39,7 +39,8 @@ fun HomeScreen(
                 .background(color = MaterialTheme.colorScheme.surface),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            HomeScreenHeader()
+            HomeScreenHeader(viewModel = homeScreenViewModel)
+            Log.d("flights", uiState.flights.toString())
             Spacer(modifier = Modifier.height(dimensionResource(R.dimen.padding_medium)))
             FlightsList()
             Spacer(modifier = Modifier.height(dimensionResource(R.dimen.padding_medium)))
