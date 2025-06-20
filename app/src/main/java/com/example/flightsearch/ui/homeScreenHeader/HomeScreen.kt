@@ -1,5 +1,6 @@
 package com.example.flightsearch.ui.homeScreenHeader
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -7,6 +8,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -48,11 +50,15 @@ fun HomeScreen(
                 onValueChange = {
                     userSearchFlight = it
                     homeScreenViewModel.searchFlights(it.uppercase())
+                    homeScreenViewModel.updateIsSearching(true)
                 },
-                onCancelButtonClicked = { userSearchFlight = "" }
+                onCancelButtonClicked = { userSearchFlight = "" },
+                onSearchTriggered = {
+                    homeScreenViewModel.updateCurrentSearch(it)
+                }
             )
 
-            if (userSearchFlight.isNotBlank()) {
+            if (uiState.isSearching) {
                 SearchSuggestionList(
                     flights = flights,
                     onValueSelected = {

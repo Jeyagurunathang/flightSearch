@@ -1,8 +1,10 @@
 package com.example.flightsearch.ui.homeScreenHeader
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Clear
@@ -25,7 +27,8 @@ fun SearchBar (
     modifier: Modifier = Modifier,
     userSearchingFlight: String = "",
     onValueChange: (String) -> Unit,
-    onCancelButtonClicked: () -> Unit
+    onCancelButtonClicked: () -> Unit,
+    onSearchTriggered: (String) -> Unit
 ) {
     Column {
         TextField(
@@ -45,6 +48,9 @@ fun SearchBar (
             ),
             keyboardOptions = KeyboardOptions(
                 imeAction = ImeAction.Go
+            ),
+            keyboardActions = KeyboardActions(
+                onGo = { onSearchTriggered(userSearchingFlight) }
             ),
             trailingIcon = {
                 if (userSearchingFlight.isNotBlank()) {

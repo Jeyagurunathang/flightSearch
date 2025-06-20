@@ -8,4 +8,6 @@ interface FlightRepository {
     fun getAllFlights(flightCode: String): Flow<List<Flight>>
 
     fun getFavoriteFlightDetails(): Flow<List<Favorite>>
+
+    fun getSearchSuggestions(flightCode: String, airportName: String): Flow<List<Flight>>
 }
