@@ -6,9 +6,9 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.example.flightsearch.data.db.dao.FlightDao
 import com.example.flightsearch.data.db.entity.Favorite
-import com.example.flightsearch.data.db.entity.Airport
+import com.example.flightsearch.data.db.entity.Flight
 
-@Database(entities = [Airport::class, Favorite::class], version = 1)
+@Database(entities = [Flight::class, Favorite::class], version = 1)
 abstract class FlightSearchDatabase : RoomDatabase() {
     abstract fun getFlightDao(): FlightDao
 

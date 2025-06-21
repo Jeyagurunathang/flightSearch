@@ -26,23 +26,23 @@ val poppinsBold = FontFamily(
 val typography = Typography(
     titleMedium = TextStyle(
         fontFamily = poppinsSemiBold,
-        fontSize = 26.sp,
-        letterSpacing = 3.sp
-    ),
-    bodyLarge = TextStyle(
-        fontFamily = poppinsRegular,
         fontSize = 24.sp,
         letterSpacing = 3.sp
     ),
-    bodyMedium = TextStyle(
-        fontFamily = poppinsRegular,
+    bodyLarge = TextStyle(
+        fontFamily = poppinsSemiBold,
         fontSize = 20.sp,
-        letterSpacing = 3.sp
+        letterSpacing = 1.sp
+    ),
+    bodyMedium = TextStyle(
+        fontFamily = poppinsSemiBold,
+        fontSize = 16.sp,
+        letterSpacing = 1.sp
     ),
     bodySmall = TextStyle(
         fontFamily = poppinsRegular,
-        fontSize = 16.sp,
-        letterSpacing = 3.sp
+        fontSize = 14.sp,
+        letterSpacing = 1.sp
     ),
     labelLarge = TextStyle(
         fontFamily = poppinsSemiBold,

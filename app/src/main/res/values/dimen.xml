@@ -4,4 +4,7 @@
     <dimen name="vertical_padding_medium">80.dp</dimen>
     <dimen name="horizontal_padding_medium">40.dp</dimen>
     <dimen name="search_bar_end_padding">16.dp</dimen>
+    <dimen name="padding_medium">24.dp</dimen>
+    <dimen name="padding_regular">16.dp</dimen>
+    <dimen name="padding_normal">12.dp</dimen>
 </resources>
