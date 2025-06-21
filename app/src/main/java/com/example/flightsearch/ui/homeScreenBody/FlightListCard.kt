@@ -28,7 +28,8 @@ import com.example.flightsearch.data.db.entity.Flight
 @Composable
 fun FlightListCard(
     modifier: Modifier = Modifier,
-    flight: Flight
+    flight: Flight,
+    searchedAirport: Flight
 ) {
     Card (
         modifier = Modifier.fillMaxWidth(),
@@ -55,12 +56,12 @@ fun FlightListCard(
                 verticalArrangement = Arrangement.spacedBy(dimensionResource(R.dimen.padding_normal))
             ) {
                 Text(
-                    text = flight.iataCode,
+                    text = searchedAirport.iataCode,
                     style = MaterialTheme.typography.bodyMedium
                 )
 
                 Text(
-                    text = flight.name,
+                    text = searchedAirport.name,
                     style = MaterialTheme.typography.bodySmall
                 )
 
@@ -77,12 +78,12 @@ fun FlightListCard(
                 )
 
                 Text(
-                    text = "CHE",
+                    text = flight.iataCode,
                     style = MaterialTheme.typography.bodyMedium
                 )
 
                 Text(
-                    text = "Chennai International Airport",
+                    text = flight.name,
                     style = MaterialTheme.typography.bodySmall
                 )
             }

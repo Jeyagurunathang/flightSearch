@@ -23,6 +23,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.compose.FlightSearchTheme
 import com.example.flightsearch.R
+import com.example.flightsearch.data.db.entity.Flight
 import com.example.flightsearch.ui.homeScreenBody.FlightsList
 
 @Composable
@@ -39,8 +40,10 @@ fun HomeScreen(
         Column (
             modifier = Modifier.fillMaxSize()
                 .padding(
-                    vertical = dimensionResource(R.dimen.vertical_padding_medium),
-                    horizontal = dimensionResource(R.dimen.horizontal_padding_medium)
+                    top = dimensionResource(R.dimen.vertical_padding_medium),
+                    start = dimensionResource(R.dimen.horizontal_padding_medium),
+                    end = dimensionResource(R.dimen.horizontal_padding_medium),
+                    bottom = dimensionResource(R.dimen.padding_medium)
                 )
                 .background(color = MaterialTheme.colorScheme.surface),
             horizontalAlignment = Alignment.CenterHorizontally
@@ -55,6 +58,7 @@ fun HomeScreen(
                 onCancelButtonClicked = { userSearchFlight = "" },
                 onSearchTriggered = {
                     homeScreenViewModel.updateCurrentSearch(it)
+                    homeScreenViewModel.getFlightsList(it)
                 }
             )
 
@@ -63,10 +67,15 @@ fun HomeScreen(
                     flights = flights,
                     onValueSelected = {
                         userSearchFlight = it
+                        homeScreenViewModel.updateCurrentSearch(it)
+                        homeScreenViewModel.getFlightsList(it)
                     }
                 )
             } else {
-                FlightsList()
+                FlightsList(
+                    flights = uiState.flights,
+                    searchedAirport = uiState.currentSearch ?: Flight(id = 1, iataCode = "", name = "", passengers = 0)
+                )
             }
 
         }

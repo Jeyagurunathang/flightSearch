@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.flightsearch.FlightSearchApplication
+import com.example.flightsearch.data.db.entity.Flight
 import com.example.flightsearch.data.repository.FlightRepository
 import com.example.flightsearch.ui.uistate.HomeScreenUiState
 import kotlinx.coroutines.delay
@@ -45,6 +46,16 @@ class HomeScreenViewModel(
         }
     }
 
+    fun getFlightsList(flightCode: String) {
+        viewModelScope.launch {
+            flightRepository.getAirportFlightsData(flightCode).collect { flights ->
+                _flightUiState.update { it.copy(flights = flights) }
+            }
+
+            Log.d("uiState", _flightUiState.value.toString())
+        }
+    }
+
     fun updateIsSearching(isSearching: Boolean) {
         _flightUiState.update {
             it.copy(isSearching = isSearching)
@@ -52,12 +63,13 @@ class HomeScreenViewModel(
     }
 
     fun updateCurrentSearch(currentSearch: String) {
+        val searchedFlight = _flightUiState.value.flights.filter { it.iataCode == currentSearch }
+
         _flightUiState.update {
-            it.copy(currentSearch = currentSearch)
+            it.copy(currentSearch = searchedFlight.first())
         }
 
         updateIsSearching(false)
-        Log.d("uiState", _flightUiState.value.toString())
     }
 
     companion object {

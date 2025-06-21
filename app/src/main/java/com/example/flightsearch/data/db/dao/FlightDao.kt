@@ -12,6 +12,7 @@ interface FlightDao {
         """
             SELECT * FROM airport
             WHERE iata_code NOT LIKE :airportCode
+            AND name NOT LIKE :airportCode
         """
     )
     fun getAirportData(airportCode: String): Flow<List<Flight>>

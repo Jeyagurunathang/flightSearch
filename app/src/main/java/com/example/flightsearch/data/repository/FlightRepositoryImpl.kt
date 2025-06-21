@@ -19,4 +19,8 @@ class FlightRepositoryImpl(
     override fun getSearchSuggestions(flightCode: String, airportName: String): Flow<List<Flight>> {
         return flightDao.getSearchSuggestions(flightCode, airportName)
     }
+
+    override fun getAirportFlightsData(flightCode: String): Flow<List<Flight>> {
+        return flightDao.getAirportData(flightCode)
+    }
 }
