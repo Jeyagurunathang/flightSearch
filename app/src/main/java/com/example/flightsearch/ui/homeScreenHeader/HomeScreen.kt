@@ -3,10 +3,15 @@ package com.example.flightsearch.ui.homeScreenHeader
 import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBars
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
+import androidx.compose.material3.adaptive.currentWindowAdaptiveInfo
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -25,6 +30,7 @@ import com.example.compose.FlightSearchTheme
 import com.example.flightsearch.R
 import com.example.flightsearch.data.db.entity.Flight
 import com.example.flightsearch.ui.homeScreenBody.FlightsList
+import com.example.flightsearch.utill.ScreenSizes
 
 @Composable
 fun HomeScreen(
@@ -37,13 +43,17 @@ fun HomeScreen(
 
         var userSearchFlight by remember { mutableStateOf("") }
 
+        val windowSizeClass = currentWindowAdaptiveInfo().windowSizeClass
+        val currentScreenSize = ScreenSizes.getCurrentDeviceScreenSize(windowSizeClass)
+
         Column (
-            modifier = Modifier.fillMaxSize()
+            modifier = Modifier
+                .fillMaxSize()
                 .padding(
-                    top = dimensionResource(R.dimen.vertical_padding_medium),
+                    top = WindowInsets.statusBars.asPaddingValues().calculateTopPadding(),
                     start = dimensionResource(R.dimen.horizontal_padding_medium),
                     end = dimensionResource(R.dimen.horizontal_padding_medium),
-                    bottom = dimensionResource(R.dimen.padding_medium)
+                    bottom = dimensionResource(R.dimen.padding_normal)
                 )
                 .background(color = MaterialTheme.colorScheme.surface),
             horizontalAlignment = Alignment.CenterHorizontally
@@ -74,7 +84,8 @@ fun HomeScreen(
             } else {
                 FlightsList(
                     flights = uiState.flights,
-                    searchedAirport = uiState.currentSearch ?: Flight(id = 1, iataCode = "", name = "", passengers = 0)
+                    searchedAirport = uiState.currentSearch ?: Flight(id = 1, iataCode = "", name = "", passengers = 0),
+                    currentScreenSize = currentScreenSize
                 )
             }
 

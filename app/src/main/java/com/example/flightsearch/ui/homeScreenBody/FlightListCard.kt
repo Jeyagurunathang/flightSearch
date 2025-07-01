@@ -1,5 +1,6 @@
 package com.example.flightsearch.ui.homeScreenBody
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -19,17 +20,20 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.example.flightsearch.R
 import com.example.flightsearch.data.db.entity.Flight
+import com.example.flightsearch.utill.ScreenSizes
 
 @Composable
 fun FlightListCard(
     modifier: Modifier = Modifier,
     flight: Flight,
-    searchedAirport: Flight
+    searchedAirport: Flight,
+    currentScreenSize: ScreenSizes
 ) {
     Card (
         modifier = Modifier.fillMaxWidth(),
@@ -51,41 +55,84 @@ fun FlightListCard(
                 )
             }
 
-            Column (
-                modifier = Modifier.padding(dimensionResource(R.dimen.padding_medium)),
-                verticalArrangement = Arrangement.spacedBy(dimensionResource(R.dimen.padding_normal))
-            ) {
-                Text(
-                    text = searchedAirport.iataCode,
-                    style = MaterialTheme.typography.bodyMedium
-                )
+            when (currentScreenSize) {
+                ScreenSizes.MOBILE_PORTRAIT -> {
+                    Column (
+                        modifier = Modifier.padding(dimensionResource(R.dimen.padding_medium)),
+                        verticalArrangement = Arrangement.spacedBy(dimensionResource(R.dimen.padding_normal))
+                    ) {
+                        Text(
+                            text = searchedAirport.iataCode,
+                            style = MaterialTheme.typography.bodyMedium
+                        )
 
-                Text(
-                    text = searchedAirport.name,
-                    style = MaterialTheme.typography.bodySmall
-                )
+                        Text(
+                            text = searchedAirport.name,
+                            style = MaterialTheme.typography.bodySmall
+                        )
 
-                Icon(
-                    painter = painterResource(R.drawable.airplane),
-                    contentDescription = "flight icon",
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(vertical = dimensionResource(R.dimen.padding_regular))
-                        .rotate(90F)
-                        .size(16.dp)
-                        .align(Alignment.CenterHorizontally),
-                    tint = MaterialTheme.colorScheme.primary
-                )
+                        Icon(
+                            painter = painterResource(R.drawable.airplane),
+                            contentDescription = "flight icon",
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(vertical = dimensionResource(R.dimen.padding_regular))
+                                .rotate(90F)
+                                .size(16.dp)
+                                .align(Alignment.CenterHorizontally),
+                            tint = MaterialTheme.colorScheme.primary
+                        )
 
-                Text(
-                    text = flight.iataCode,
-                    style = MaterialTheme.typography.bodyMedium
-                )
+                        Text(
+                            text = flight.iataCode,
+                            style = MaterialTheme.typography.bodyMedium
+                        )
 
-                Text(
-                    text = flight.name,
-                    style = MaterialTheme.typography.bodySmall
-                )
+                        Text(
+                            text = flight.name,
+                            style = MaterialTheme.typography.bodySmall
+                        )
+                    }
+                }
+                else -> {
+                    Row (
+                        modifier = Modifier.fillMaxWidth().padding(dimensionResource(R.dimen.padding_medium)),
+                        horizontalArrangement = Arrangement.SpaceBetween
+                    ) {
+                        Column {
+                            Text(
+                                text = searchedAirport.iataCode,
+                                style = MaterialTheme.typography.bodyMedium
+                            )
+
+                            Text(
+                                text = searchedAirport.name,
+                                style = MaterialTheme.typography.bodySmall
+                            )
+                        }
+
+                        Icon(
+                            painter = painterResource(R.drawable.airplane),
+                            contentDescription = "flight icon",
+                            modifier = Modifier
+                                .padding(vertical = dimensionResource(R.dimen.padding_regular))
+                                .size(16.dp),
+                            tint = MaterialTheme.colorScheme.primary
+                        )
+
+                        Column {
+                            Text(
+                                text = flight.iataCode,
+                                style = MaterialTheme.typography.bodyMedium
+                            )
+
+                            Text(
+                                text = flight.name,
+                                style = MaterialTheme.typography.bodySmall
+                            )
+                        }
+                    }
+                }
             }
         }
     }
