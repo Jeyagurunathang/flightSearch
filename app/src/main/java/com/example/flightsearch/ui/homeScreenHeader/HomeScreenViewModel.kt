@@ -16,13 +16,16 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class HomeScreenViewModel(
-    private val flightRepository: FlightRepository
+    private val flightRepository: FlightRepository,
+    private val userSearchRepository: SearchBarRepository
 ) : ViewModel() {
     private val _flightUiState = MutableStateFlow(HomeScreenUiState())
     val flightUiState: StateFlow<HomeScreenUiState> = _flightUiState.asStateFlow()
@@ -30,7 +33,7 @@ class HomeScreenViewModel(
     init {
         viewModelScope.launch {
             delay(1000L)
-            searchFlights("FCO")
+            searchFlights(userSearchRepository.getFlightCode() ?: "FCO")
         }
     }
 
@@ -63,20 +66,34 @@ class HomeScreenViewModel(
     }
 
     fun updateCurrentSearch(currentSearch: String) {
-        val searchedFlight = _flightUiState.value.flights.filter { it.iataCode == currentSearch }
+        val searchedFlight = _flightUiState.value.flights.first { it.iataCode == currentSearch }
 
-        _flightUiState.update {
-            it.copy(currentSearch = searchedFlight.first())
+        viewModelScope.launch {
+            userSearchRepository.saveSearchFlightCode(searchedFlight.iataCode)
+            userSearchRepository.saveSearchFlightDescription(searchedFlight.name)
+
+            _flightUiState.update {
+                it.copy(
+                    currentSearchFlightCode = userSearchRepository.getFlightCode() ?: "",
+                    currentSearchFlightDescription = userSearchRepository.getFlightDescription() ?: ""
+                )
+            }
+
+//            Log.d("updatedUiState", _flightUiState.value.toString())
         }
 
         updateIsSearching(false)
+//        Log.d("updatedUiState", _flightUiState.value.toString())
     }
 
     companion object {
         val factory: ViewModelProvider.Factory = viewModelFactory {
             initializer {
                 val application = (this[APPLICATION_KEY] as FlightSearchApplication)
-                HomeScreenViewModel(flightRepository = application.container.flightRepository)
+                HomeScreenViewModel(
+                    flightRepository = application.container.flightRepository,
+                    userSearchRepository = application.container.searchBarRepository
+                )
             }
         }
     }

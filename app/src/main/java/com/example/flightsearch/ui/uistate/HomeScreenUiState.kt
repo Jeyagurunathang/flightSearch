@@ -5,5 +5,6 @@ import com.example.flightsearch.data.db.entity.Flight
 data class HomeScreenUiState(
     val flights: List<Flight> = emptyList(),
     val isSearching: Boolean = false,
-    val currentSearch: Flight? = null
+    val currentSearchFlightCode: String = "",
+    val currentSearchFlightDescription: String = ""
 )

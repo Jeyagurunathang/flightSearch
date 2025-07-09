@@ -51,6 +51,7 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
     implementation(libs.androidx.ui.text.google.fonts)
+    implementation(libs.androidx.adaptive.android)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -72,4 +73,7 @@ dependencies {
 
     // preferences datastore
     implementation(libs.androidx.datastore.preferences)
+
+    // window-width-class
+    implementation(libs.androidx.adaptive.android)
 }

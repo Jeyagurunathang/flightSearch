@@ -51,10 +51,7 @@ fun SearchBar (
                 unfocusedIndicatorColor = Color.Transparent
             ),
             keyboardOptions = KeyboardOptions(
-                imeAction = ImeAction.Go
-            ),
-            keyboardActions = KeyboardActions(
-                onGo = { onSearchTriggered(userSearchingFlight) }
+                imeAction = ImeAction.Done
             ),
             trailingIcon = {
                 if (userSearchingFlight.isNotBlank()) {
