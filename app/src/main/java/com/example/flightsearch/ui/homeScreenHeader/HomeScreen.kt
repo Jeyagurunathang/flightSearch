@@ -40,8 +40,17 @@ fun HomeScreen(
     Surface {
         val uiState by homeScreenViewModel.flightUiState.collectAsState()
         val flights = uiState.flights
+        Log.d("activity", uiState.toString())
 
-        var userSearchFlight by remember { mutableStateOf("") }
+        var previouslySearchedFlight: String = ""
+
+        if (flights.isNotEmpty()) {
+            LaunchedEffect(Unit) {
+                homeScreenViewModel.getFlightsList(flights.first().iataCode)
+                previouslySearchedFlight = flights.takeIf { it.isNotEmpty() }?.first()?.iataCode ?: ""
+            }
+        }
+        var userSearchFlight by remember { mutableStateOf(previouslySearchedFlight) }
 
         val windowSizeClass = currentWindowAdaptiveInfo().windowSizeClass
         val currentScreenSize = ScreenSizes.getCurrentDeviceScreenSize(windowSizeClass)
@@ -84,7 +93,8 @@ fun HomeScreen(
             } else {
                 FlightsList(
                     flights = uiState.flights,
-                    searchedAirport = uiState.currentSearch ?: Flight(id = 1, iataCode = "", name = "", passengers = 0),
+                    flightCode = uiState.currentSearchFlightCode,
+                    flightDescription = uiState.currentSearchFlightDescription,
                     currentScreenSize = currentScreenSize
                 )
             }

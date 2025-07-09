@@ -16,7 +16,8 @@ import com.example.flightsearch.utill.ScreenSizes
 fun FlightsList(
     modifier: Modifier = Modifier,
     flights: List<Flight> = emptyList(),
-    searchedAirport: Flight,
+    flightCode: String,
+    flightDescription: String,
     currentScreenSize: ScreenSizes
 ) {
     LazyColumn (
@@ -26,7 +27,12 @@ fun FlightsList(
             items = flights,
             key = { it.id }
         ) {
-            FlightListCard(flight = it, searchedAirport = searchedAirport, currentScreenSize = currentScreenSize)
+            FlightListCard(
+                flight = it,
+                currentSearchedFlightCode = flightCode,
+                currentSearchedFlightDescription = flightDescription,
+                currentScreenSize = currentScreenSize
+            )
         }
     }
 }
