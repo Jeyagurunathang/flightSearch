@@ -67,9 +67,9 @@ dependencies {
     implementation(libs.androidx.navigation.compose)
 
     //Room
-    implementation("androidx.room:room-runtime:${rootProject.extra["room_version"]}")
+    implementation(libs.androidx.room.runtime)
     ksp("androidx.room:room-compiler:${rootProject.extra["room_version"]}")
-    implementation("androidx.room:room-ktx:${rootProject.extra["room_version"]}")
+    implementation(libs.androidx.room.ktx)
 
     // preferences datastore
     implementation(libs.androidx.datastore.preferences)

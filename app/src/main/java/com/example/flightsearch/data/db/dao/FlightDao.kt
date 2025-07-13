@@ -1,6 +1,8 @@
 package com.example.flightsearch.data.db.dao
 
 import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.example.flightsearch.data.db.entity.Favorite
 import com.example.flightsearch.data.db.entity.Flight
@@ -33,4 +35,7 @@ interface FlightDao {
         """
     )
     fun getFavoriteAirportData(): Flow<List<Favorite>>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertFavorite(favorite: Favorite)
 }

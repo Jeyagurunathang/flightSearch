@@ -8,18 +8,14 @@ import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.flightsearch.FlightSearchApplication
+import com.example.flightsearch.data.db.entity.Favorite
 import com.example.flightsearch.data.db.entity.Flight
 import com.example.flightsearch.data.repository.FlightRepository
 import com.example.flightsearch.ui.uistate.HomeScreenUiState
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
@@ -78,12 +74,16 @@ class HomeScreenViewModel(
                     currentSearchFlightDescription = userSearchRepository.getFlightDescription() ?: ""
                 )
             }
-
-//            Log.d("updatedUiState", _flightUiState.value.toString())
         }
 
         updateIsSearching(false)
-//        Log.d("updatedUiState", _flightUiState.value.toString())
+    }
+
+    fun insertFavorite(currentAirportCode: String, selectedFlightRoute: Flight) {
+        val favorite = Favorite(id = selectedFlightRoute.id, departureCode = currentAirportCode, destinationCode = selectedFlightRoute.iataCode)
+        viewModelScope.launch {
+            flightRepository.insertFavorite(favorite)
+        }
     }
 
     companion object {

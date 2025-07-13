@@ -12,4 +12,6 @@ interface FlightRepository {
     fun getSearchSuggestions(flightCode: String, airportName: String): Flow<List<Flight>>
 
     fun getAirportFlightsData(flightCode: String): Flow<List<Flight>>
+
+    suspend fun insertFavorite(favorite: Favorite)
 }

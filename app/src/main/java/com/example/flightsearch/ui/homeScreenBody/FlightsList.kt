@@ -18,7 +18,8 @@ fun FlightsList(
     flights: List<Flight> = emptyList(),
     flightCode: String,
     flightDescription: String,
-    currentScreenSize: ScreenSizes
+    currentScreenSize: ScreenSizes,
+    makeFavorite: (String, Flight) -> Unit
 ) {
     LazyColumn (
         verticalArrangement = Arrangement.spacedBy(dimensionResource(R.dimen.padding_medium))
@@ -31,7 +32,8 @@ fun FlightsList(
                 flight = it,
                 currentSearchedFlightCode = flightCode,
                 currentSearchedFlightDescription = flightDescription,
-                currentScreenSize = currentScreenSize
+                currentScreenSize = currentScreenSize,
+                makeFavorite = makeFavorite
             )
         }
     }

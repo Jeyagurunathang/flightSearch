@@ -32,6 +32,7 @@ import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.example.flightsearch.R
+import com.example.flightsearch.data.db.entity.Favorite
 import com.example.flightsearch.data.db.entity.Flight
 import com.example.flightsearch.utill.ScreenSizes
 import kotlinx.coroutines.delay
@@ -43,7 +44,8 @@ fun FlightListCard(
     flight: Flight,
     currentSearchedFlightCode: String = "",
     currentSearchedFlightDescription: String = "",
-    currentScreenSize: ScreenSizes
+    currentScreenSize: ScreenSizes,
+    makeFavorite: (String, Flight) -> Unit
 ) {
     val scope = rememberCoroutineScope()
     var isFavorite by remember { mutableStateOf(false) }
@@ -77,6 +79,8 @@ fun FlightListCard(
                             )
                         )
                     }
+
+                    makeFavorite(currentSearchedFlightCode, flight)
                 },
                 modifier = Modifier.align(Alignment.TopEnd).scale(scale.value)
             ) {

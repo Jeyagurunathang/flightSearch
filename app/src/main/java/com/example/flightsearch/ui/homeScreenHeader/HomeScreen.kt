@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBars
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.adaptive.currentWindowAdaptiveInfo
 import androidx.compose.runtime.Composable
@@ -24,11 +23,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
 import com.example.compose.FlightSearchTheme
 import com.example.flightsearch.R
-import com.example.flightsearch.data.db.entity.Flight
 import com.example.flightsearch.ui.homeScreenBody.FlightsList
 import com.example.flightsearch.utill.ScreenSizes
 
@@ -95,7 +91,10 @@ fun HomeScreen(
                     flights = uiState.flights,
                     flightCode = uiState.currentSearchFlightCode,
                     flightDescription = uiState.currentSearchFlightDescription,
-                    currentScreenSize = currentScreenSize
+                    currentScreenSize = currentScreenSize,
+                    makeFavorite = { currentAirportCode, selectedFlightRoute ->
+                        homeScreenViewModel.insertFavorite(currentAirportCode, selectedFlightRoute)
+                    }
                 )
             }
 

@@ -23,4 +23,8 @@ class FlightRepositoryImpl(
     override fun getAirportFlightsData(flightCode: String): Flow<List<Flight>> {
         return flightDao.getAirportData(flightCode)
     }
+
+    override suspend fun insertFavorite(favorite: Favorite) {
+        flightDao.insertFavorite(favorite)
+    }
 }
