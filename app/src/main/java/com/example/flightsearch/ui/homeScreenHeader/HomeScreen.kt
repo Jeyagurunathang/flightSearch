@@ -25,6 +25,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.compose.FlightSearchTheme
 import com.example.flightsearch.R
+import com.example.flightsearch.ui.homeScreenBody.FavoriteFlightList
 import com.example.flightsearch.ui.homeScreenBody.FlightsList
 import com.example.flightsearch.utill.ScreenSizes
 
@@ -35,8 +36,9 @@ fun HomeScreen(
 ) {
     Surface {
         val uiState by homeScreenViewModel.flightUiState.collectAsState()
-        val flights = uiState.flights
-        Log.d("activity", uiState.toString())
+        val flights = uiState.searchedFlights
+
+        Log.d("flights", uiState.toString())
 
         var previouslySearchedFlight: String = ""
 
@@ -86,15 +88,20 @@ fun HomeScreen(
                         homeScreenViewModel.getFlightsList(it)
                     }
                 )
-            } else {
+            } else if (userSearchFlight != "") {
                 FlightsList(
-                    flights = uiState.flights,
+                    flights = uiState.searchedFlights,
                     flightCode = uiState.currentSearchFlightCode,
                     flightDescription = uiState.currentSearchFlightDescription,
                     currentScreenSize = currentScreenSize,
                     makeFavorite = { currentAirportCode, selectedFlightRoute ->
                         homeScreenViewModel.insertFavorite(currentAirportCode, selectedFlightRoute)
                     }
+                )
+            } else {
+                FavoriteFlightList(
+                    flights = uiState.favoriteFlights,
+                    currentScreenSize = currentScreenSize
                 )
             }
 

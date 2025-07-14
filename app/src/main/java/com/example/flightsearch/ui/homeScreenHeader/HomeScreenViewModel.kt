@@ -16,6 +16,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
@@ -29,7 +30,10 @@ class HomeScreenViewModel(
     init {
         viewModelScope.launch {
             delay(1000L)
-            searchFlights(userSearchRepository.getFlightCode() ?: "FCO")
+            userSearchRepository.clearPreferences()
+//            searchFlights(userSearchRepository.getFlightCode() ?: "FCO")
+            getFavoriteFlights()
+            Log.d("favoriteFlight", _flightUiState.value.favoriteFlights.joinToString())
         }
     }
 
@@ -39,7 +43,7 @@ class HomeScreenViewModel(
         viewModelScope.launch {
             flightRepository.getSearchSuggestions(iataCode, airportName).collect { flights ->
                 _flightUiState.update {
-                    it.copy(flights = flights)
+                    it.copy(searchedFlights = flights)
                 }
             }
         }
@@ -48,7 +52,7 @@ class HomeScreenViewModel(
     fun getFlightsList(flightCode: String) {
         viewModelScope.launch {
             flightRepository.getAirportFlightsData(flightCode).collect { flights ->
-                _flightUiState.update { it.copy(flights = flights) }
+                _flightUiState.update { it.copy(searchedFlights = flights) }
             }
 
             Log.d("uiState", _flightUiState.value.toString())
@@ -62,7 +66,7 @@ class HomeScreenViewModel(
     }
 
     fun updateCurrentSearch(currentSearch: String) {
-        val searchedFlight = _flightUiState.value.flights.first { it.iataCode == currentSearch }
+        val searchedFlight = _flightUiState.value.searchedFlights.first { it.iataCode == currentSearch }
 
         viewModelScope.launch {
             userSearchRepository.saveSearchFlightCode(searchedFlight.iataCode)
@@ -84,6 +88,16 @@ class HomeScreenViewModel(
         viewModelScope.launch {
             flightRepository.insertFavorite(favorite)
         }
+    }
+    
+    private fun getFavoriteFlights() {
+        viewModelScope.launch {
+            flightRepository.getFavoriteFlightDetails().collect { favoriteFlights ->
+                _flightUiState.update { 
+                    it.copy(favoriteFlights = favoriteFlights)
+                }
+            }
+        }    
     }
 
     companion object {

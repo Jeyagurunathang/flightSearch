@@ -45,6 +45,12 @@ class SearchBarRepository(
         val preference = datastore.data.first()
         return preference[PreferenceKeys.FLIGHT_DESCRIPTION] ?: "International Airport"
     }
+
+    suspend fun clearPreferences() {
+        datastore.edit { preferences ->
+            preferences.clear()
+        }
+    }
 }
 
 object PreferenceKeys {
